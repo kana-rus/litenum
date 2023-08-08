@@ -1,24 +1,41 @@
-use proc_macro2::{TokenStream, Span};
-use syn::{Result, parse2, ItemEnum, Error};
+use quote::{quote};
+use syn::{Result, parse2};
+use proc_macro2::{TokenStream};
+
+use crate::components::SimpleEnum;
+
 
 pub(super) fn to(enum_tokens: TokenStream) -> Result<TokenStream> {
-    let ItemEnum {
-        attrs,
-        vis,
-        enum_token,
-        ident,
-        generics,
-        brace_token,
-        variants,
-    } = parse2(enum_tokens)?;
+    let simple_enum = parse2::<SimpleEnum>(enum_tokens.clone())?;
+    let to_lit_impl = simple_enum.to_lit_impl();
 
-    if variants.iter().any(|v| !v.fields.is_empty()) {
-        return Err(Error::new(Span::call_site(), ""))
-    }
-
-    
+    Ok(quote!{
+        #[allow(non_camel_case_types)]
+        #enum_tokens
+        #to_lit_impl
+    })
 }
 
 pub(super) fn from(enum_tokens: TokenStream) -> Result<TokenStream> {
-    todo!()
+    let simple_enum   = parse2::<SimpleEnum>(enum_tokens.clone())?;
+    let from_lit_impl = simple_enum.from_lit_impl();
+
+    Ok(quote!{
+        #[allow(non_camel_case_types)]
+        #enum_tokens
+        #from_lit_impl
+    })
+}
+
+pub(super) fn ium(enum_tokens: TokenStream) -> Result<TokenStream> {
+    let simple_enum   = parse2::<SimpleEnum>(enum_tokens.clone())?;
+    let to_lit_impl   = simple_enum.to_lit_impl();
+    let from_lit_impl = simple_enum.from_lit_impl();
+
+    Ok(quote!{
+        #[allow(non_camel_case_types)]
+        #enum_tokens
+        #to_lit_impl
+        #from_lit_impl
+    })
 }
