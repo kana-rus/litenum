@@ -48,8 +48,8 @@ fn main() {
 ### impl both at once
 
 ```rust
-#[litenum::ium]  // euqals to
-// `#[litenum::to] #[litenum::from]`
+#[litenum::ium]  // equals to
+                 // `#[litenum::to] #[litenum::from]`
 #[derive(Debug, PartialEq)]
 enum AnkerTarget {
     _blank,
