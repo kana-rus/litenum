@@ -1,12 +1,21 @@
 [package]
-name        = "litenum"
-version     = "0.1.0"
-edition     = "2021"
+name           = "litenum"
+version        = "0.1.0"
+edition        = "2021"
+authors        = ["kanarus <kanarus786@gmail.com>"]
+description    = "minimal convertion utilities between literal and enum"
+documentation  = "https://docs.rs/litenum"
+homepage       = "https://crates.io/crates/litenum"
+repository     = "https://github.com/kana-rus/litenum"
+readme         = "README.md"
+keywords       = ["macros", "proc-macro", "enum", "convert"]
+categories     = ["rust-patterns", "encoding", "no-std"]
+license        = "MIT"
 
 [dependencies]
-proc-macro2 = "1.0"
-quote       = "1.0"
-syn         = { version = "1.0", features = ["full"] }
+proc-macro2    = "1.0"
+quote          = "1.0"
+syn            = { version = "1.0", default-features = false, features = ["parsing"] }
 
 [lib]
 proc-macro = true
