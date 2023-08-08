@@ -90,7 +90,7 @@ pub fn from(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) ->
 ///     );
 /// 
 ///     assert_eq!(
-///         AnkerTarget::from_lit("_blank").unwrap(),
+///         AnkerTarget::from_lit("_blank"),
 ///         Some(AnkerTarget::_blank),
 ///     );
 /// }
