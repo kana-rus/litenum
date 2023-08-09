@@ -2,7 +2,14 @@
     <h1>litenum</h1>
 </div>
 
-*litenum* is minimal convertion utilities between **literal** and **enum** !
+*litenum* is minimal utilities for convertion between **literal** and **enum** !
+
+
+## Features
+
+- *minimal inplementation*
+- *no std*, *no alloc*
+
 
 ## How to use
 
