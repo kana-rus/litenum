@@ -1,8 +1,5 @@
 #![doc(html_root_url = "https://docs.rs/litenum")]
 
-#![no_std]
-extern crate alloc;
-
 mod internal;
 mod components;
 

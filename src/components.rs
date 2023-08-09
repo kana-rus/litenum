@@ -1,5 +1,3 @@
-use alloc::{string::ToString};
-
 use quote::{quote};
 use proc_macro2::{Ident, TokenStream};
 use syn::{Result, punctuated::Punctuated, token, parse::Parse, braced, bracketed};
@@ -27,9 +25,8 @@ pub(crate) struct SimpleEnum {
         let Self { ident, variants } = self;
 
         let arms = variants.iter().map(|ident| {
-            let ident_str = ident.to_string();
             quote!{
-                Self::#ident => #ident_str,
+                Self::#ident => stringify!( #ident ),
             }
         });
 
@@ -48,9 +45,8 @@ pub(crate) struct SimpleEnum {
         let Self { ident, variants } = self;
 
         let arms = variants.iter().map(|ident| {
-            let ident_str = ident.to_string();
             quote!{
-                #ident_str => Some(Self::#ident),
+                stringify!( #ident ) => Some(Self::#ident),
             }
         });
 
