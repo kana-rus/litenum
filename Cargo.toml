@@ -9,7 +9,7 @@ homepage       = "https://crates.io/crates/litenum"
 repository     = "https://github.com/kana-rus/litenum"
 readme         = "README.md"
 keywords       = ["macros", "proc-macro", "enum", "convert"]
-categories     = ["rust-patterns", "encoding", "no-std"]
+categories     = ["rust-patterns", "encoding", "no-std::no-alloc"]
 license        = "MIT"
 
 [dependencies]
