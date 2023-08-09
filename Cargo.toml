@@ -8,7 +8,7 @@ documentation  = "https://docs.rs/litenum"
 homepage       = "https://crates.io/crates/litenum"
 repository     = "https://github.com/kana-rus/litenum"
 readme         = "README.md"
-keywords       = ["macros", "proc-macro", "enum", "convert"]
+keywords       = ["macros", "proc-macro", "enum", "convert", "no_std"]
 categories     = ["rust-patterns", "encoding", "no-std::no-alloc"]
 license        = "MIT"
 
