@@ -32,7 +32,7 @@ pub(crate) struct SimpleEnum {
 
         quote!{
             impl #ident {
-                #[inline] pub(crate) fn to_lit(&self) -> &'static str {
+                #[inline] pub(crate) const fn to_lit(&self) -> &'static str {
                     match self {
                         #( #arms )*
                     }
