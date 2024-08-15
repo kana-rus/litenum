@@ -1,4 +1,5 @@
 #![doc(html_root_url = "https://docs.rs/litenum/1.0.0/litenum")]
+#![doc = include_str!("../README.md")]
 
 mod internal;
 mod components;
