@@ -2,14 +2,12 @@
     <h1>litenum</h1>
 </div>
 
-*litenum* is minimal utilities for convertion between **literal** and **enum** !
-
+litenum is the *minimal* utility for conversion between **literal** and **enum** !
 
 ## Features
 
-- *minimal inplementation*
-- *no std*, *no alloc*
-
+- minimal inplementation
+- no std, no alloc
 
 ## How to use
 
@@ -26,7 +24,7 @@ enum AnkerTarget {
 
 fn main() {
     assert_eq!(
-        AnkerTarget::_blank.to_lit(),
+        AnkerTarget::_blank.lit(),
         "_blank",
     )
 }
@@ -55,8 +53,8 @@ fn main() {
 ### impl both at once
 
 ```rust
-#[litenum::ium]  // equals to
-                 // `#[litenum::to] #[litenum::from]`
+#[litenum::ium] // same as
+                // `#[litenum::to] #[litenum::from]`
 #[derive(Debug, PartialEq)]
 enum AnkerTarget {
     _blank,
@@ -67,12 +65,12 @@ enum AnkerTarget {
 
 fn main() {
     assert_eq!(
-        AnkerTarget::_blank.to_lit(),
+        AnkerTarget::_blank.lit(),
         "_blank",
     );
 
     assert_eq!(
-        AnkerTarget::from_lit("_blank").unwrap(),
+        AnkerTarget::from_lit("_blank"),
         Some(AnkerTarget::_blank),
     );
 }

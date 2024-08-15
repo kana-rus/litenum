@@ -1,12 +1,14 @@
-use quote::{quote};
-use proc_macro2::{Ident, TokenStream};
 use syn::{Result, punctuated::Punctuated, token, parse::Parse, braced, bracketed};
+use proc_macro2::{Ident, TokenStream};
+use quote::quote;
 
 
 pub(crate) struct SimpleEnum {
     pub(crate) ident:    Ident,
     pub(crate) variants: Punctuated<Ident, token::Comma>,
-} impl Parse for SimpleEnum {
+}
+
+impl Parse for SimpleEnum {
     fn parse(input: syn::parse::ParseStream) -> Result<Self> {
         while input.peek(token::Pound) {
             input.parse::<token::Pound>()?;
@@ -20,22 +22,32 @@ pub(crate) struct SimpleEnum {
 
         Ok(Self { ident, variants })
     }
-} impl SimpleEnum {
+}
+
+impl SimpleEnum {
     pub(crate) fn to_lit_impl(&self) -> TokenStream {
         let Self { ident, variants } = self;
 
-        let arms = variants.iter().map(|ident| {
-            quote!{
-                Self::#ident => stringify!( #ident ),
-            }
-        });
+        let proc = {
+            let arms = variants.iter().map(|ident| {
+                quote! { Self::#ident => stringify!(#ident), }
+            });
 
-        quote!{
+            quote! {
+                match *self {
+                    #( #arms )*
+                }
+            }
+        };
+
+        let doc = format!("*implemented by litenum*");
+
+        quote! {
             impl #ident {
-                #[inline] pub(crate) const fn to_lit(&self) -> &'static str {
-                    match self {
-                        #( #arms )*
-                    }
+                #[doc = #doc]
+                #[inline]
+                pub(crate) const fn lit(&self) -> &'static str {
+                    #proc
                 }
             }
         }
@@ -44,19 +56,27 @@ pub(crate) struct SimpleEnum {
     pub(crate) fn from_lit_impl(&self) -> TokenStream {
         let Self { ident, variants } = self;
 
-        let arms = variants.iter().map(|ident| {
-            quote!{
-                stringify!( #ident ) => Some(Self::#ident),
-            }
-        });
+        let proc = {
+            let arms = variants.iter().map(|ident| {
+                quote! { stringify!(#ident) => Some(Self::#ident), }
+            });
 
-        quote!{
+            quote! {
+                match lit {
+                    #( #arms )*
+                    _ => None
+                }
+            }
+        };
+
+        let doc = format!("*implemented by litenum*");
+
+        quote! {
             impl #ident {
-                #[inline] pub(crate) fn from_lit(lit: &str) -> Option<Self> {
-                    match lit {
-                        #( #arms )*
-                        _ => None
-                    }
+                #[doc = #doc]
+                #[inline]
+                pub(crate) fn from_lit(lit: &str) -> Option<Self> {
+                    #proc
                 }
             }
         }

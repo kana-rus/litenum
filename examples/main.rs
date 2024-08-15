@@ -10,7 +10,7 @@ enum AnkerTarget {
 fn main() {
     let a_tag = format!(r#"<a href="{}" target="{}">click me!</a>"#,
         "https://example.com",
-        AnkerTarget::_blank.to_lit(),
+        AnkerTarget::_blank.lit(),
     );
     assert_eq!(
         a_tag,

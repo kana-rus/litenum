@@ -1,4 +1,4 @@
-#![doc(html_root_url = "https://docs.rs/litenum")]
+#![doc(html_root_url = "https://docs.rs/litenum/1.0.0/litenum")]
 
 mod internal;
 mod components;
@@ -22,7 +22,7 @@ mod components;
 /// 
 /// fn main() {
 ///     assert_eq!(
-///         AnkerTarget::_blank.to_lit(),
+///         AnkerTarget::_blank.lit(),
 ///         "_blank",
 ///     )
 /// }
@@ -30,7 +30,7 @@ mod components;
 #[proc_macro_attribute]
 pub fn to(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) -> proc_macro::TokenStream {
     internal::to(enum_tokens.into())
-        .unwrap_or_else(|e| e.into_compile_error())
+        .unwrap_or_else(syn::Error::into_compile_error)
         .into()
 }
 
@@ -61,11 +61,11 @@ pub fn to(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) -> p
 #[proc_macro_attribute]
 pub fn from(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) -> proc_macro::TokenStream {
     internal::from(enum_tokens.into())
-        .unwrap_or_else(|e| e.into_compile_error())
+        .unwrap_or_else(syn::Error::into_compile_error)
         .into()
 }
 
-/// Utility to generate `to_lit` and `from_lit` at once
+/// Utility to impl `lit` and `from_lit` at once
 /// 
 /// <br/>
 /// 
@@ -82,7 +82,7 @@ pub fn from(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) ->
 /// 
 /// fn main() {
 ///     assert_eq!(
-///         AnkerTarget::_blank.to_lit(),
+///         AnkerTarget::_blank.lit(),
 ///         "_blank",
 ///     );
 /// 
@@ -95,6 +95,6 @@ pub fn from(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) ->
 #[proc_macro_attribute]
 pub fn ium(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) -> proc_macro::TokenStream {
     internal::ium(enum_tokens.into())
-        .unwrap_or_else(|e| e.into_compile_error())
+        .unwrap_or_else(syn::Error::into_compile_error)
         .into()
 }
