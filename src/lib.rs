@@ -5,10 +5,10 @@ mod internal;
 mod components;
 
 
-/// Generate method `fn to_lit(&self) -> &'static str` that converts
-/// enum variants to literals by names.
+/// Generate method `fn lit(&self) -> &'static str`
+/// that converts an enum variant to a literal by its name.
 /// 
-/// Available for only simple enums with **no** generics or variant fields.
+/// Available only for a simple enum with **no** generics or variant fields.
 /// 
 /// <br/>
 /// 
@@ -35,10 +35,10 @@ pub fn to(_: proc_macro::TokenStream, enum_tokens: proc_macro::TokenStream) -> p
         .into()
 }
 
-/// Generate method `fn from_lit(lit: &str) -> Option<Self>` that converts
-/// `&str` variables to enum variants by names.
+/// Generate method `fn from_lit(lit: &str) -> Option<Self>`
+/// that converts a `&str` variable to an enum variant by its name.
 /// 
-/// Available for only simple enums with **no** generics or variant fields.
+/// Available only for a simple enums with **no** generics or variant fields.
 /// 
 /// <br/>
 /// 
