@@ -1,11 +1,14 @@
 #[litenum::ium]
 #[derive(Debug, PartialEq)]
-enum AnkerTarget {
+pub enum AnkerTarget {
     _blank,
     _self,
     _top,
     _parent,
 }
+
+#[litenum::ium]
+pub(in crate) enum _PubWithScope {}
 
 fn main() {
     let a_tag = format!(r#"<a href="{}" target="{}">click me!</a>"#,

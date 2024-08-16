@@ -1,4 +1,4 @@
-use syn::{Result, punctuated::Punctuated, token, parse::Parse, braced, bracketed};
+use syn::{parse::Parse, punctuated::Punctuated, token, Result};
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;
 
@@ -12,12 +12,19 @@ impl Parse for SimpleEnum {
     fn parse(input: syn::parse::ParseStream) -> Result<Self> {
         while input.peek(token::Pound) {
             input.parse::<token::Pound>()?;
-            let attr; bracketed!(attr in input);
+            let attr; syn::bracketed!(attr in input);
             attr.parse::<TokenStream>()?;
+        }
+        if input.peek(token::Pub) {
+            input.parse::<token::Pub>()?;
+            if input.peek(token::Paren) {
+                let scope; syn::parenthesized!(scope in input);
+                scope.parse::<TokenStream>()?;
+            }
         }
         input.parse::<token::Enum>()?;
         let ident = input.parse::<Ident>()?;
-        let variants_buf; braced!(variants_buf in input);
+        let variants_buf; syn::braced!(variants_buf in input);
         let variants = variants_buf.parse_terminated::<_, token::Comma>(Ident::parse)?;
 
         Ok(Self { ident, variants })
